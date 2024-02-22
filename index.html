@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스파르타플릭스</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap');
+
+        * {
+            font-family: "Sunflower", sans-serif;
+        }
+
+        .main {
+            background-color: green;
+            color: white;
+            background-image: url(https://mblogthumb-phinf.pstatic.net/MjAxOTEwMjZfNCAg/MDAxNTcyMDk5MDE0OTAw.4TF_4ZXlKLG9TNAaXj2tmoSTyhjtAa1nKZkVwV9rs_Ag.yn7xMbpgYILRa-9scHfQ3cJJWK3KISoCsMmN5jCQkYAg.JPEG.ronnie360/%EC%98%81%ED%99%94%EC%A0%91%EC%86%8D.jpg?type=w800);
+            background-position: center;
+            background-size: cover;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .mycards {
+            width: 1200px;
+            margin: 20px auto 20px auto;
+        }
+
+        .mypostingbox {
+            width: 400px;
+            margin: 20px auto 20px auto;
+            border: 1px solid white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .form-floating>input {
+            color: white;
+            background-color: transparent;
+        }
+
+        .form-floating>label {
+            color: white;
+            background-color: transparent;
+        }
+
+        .input-group>label {
+            color: white;
+            background-color: transparent;
+        }
+
+        .mypostingbox>button {
+            width: 100%;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+            fetch(url).then(res => res.json()).then(data => {
+                let temp = data['temp'];
+                if(temp>20){
+                    $('#msg').text('더워요')
+                } else {
+                    $('#msg').text('추워요')
+                }
+                
+
+            })
+        })
+
+        function openclose() {
+            $('#postingbox').toggle();
+        }
+        function makeCard() {
+            let image = $('#image').val();
+            let title = $('#title').val();
+            let comment = $('#comment').val();
+            let star = $('#star').val();
+
+            let temp_html = `
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${image}">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${star}</p>
+                        <p class="card-text">${comment}</p>
+                    </div>
+                </div>
+            </div>`;
+            $('#card').append(temp_html);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 text-danger">spartaflix</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">내가 찜한 콘텐츠</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">현재 기온 : <span id="msg"></span></a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                aria-label="Search">
+        </form>
+
+        <div class="text-end">
+            <button type="button" class="btn btn-outline-light me-2">Login</button>
+            <button type="button" class="btn btn-danger">Sign-up</button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">접속</h1>
+                <p class="col-md-8 fs-4">일체의 모든 관계로부터 자유로워진 이들은 사이버스페이스에서의 만남을 벗어나, 함께 얼굴을 맞대고 영화를 보기로 약속한다.</p>
+                <button onclick="openclose()" type="button" class="btn btn-outline-light">영화기록하기</button>
+                <button type="button" class="btn btn-outline-light">상세설명</button>
+            </div>
+        </div>
+    </div>
+    <div class="mypostingbox" id="postingbox">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="image" placeholder="영화 이미지 주소">
+            <label for="floatingInput">영화 이미지 주소</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="title" placeholder="영화 제목">
+            <label for="floatingInput">영화 제목</label>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">별점</label>
+            <select class="form-select" id="star">
+                <option selected>별점선택</option>
+                <option value="⭐">⭐</option>
+                <option value="⭐⭐">⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="comment" placeholder="추천 이유">
+            <label for="floatingInput">추천 이유</label>
+        </div>
+        <button onclick="makeCard()" type="button" class="btn btn-danger">기록하기</button>
+    </div>
+    <div class="mycards">
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img
+                        src="https://i.namu.wiki/i/CfXm_awnwEQG9w46vaPS0n6c7SpkYK4Y9gtfnulW98sDXQRXQtH3NJIhyPHPPqOUxyVI3cuqgnaiy0K6icDxxQ.webp">
+                    <div class="card-body">
+                        <h5 class="card-title">영화 제목</h5>
+                        <p class="card-text">영화 내용</p>
+                        <p class="card-text">⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/ko/d/d5/%EB%B4%84%EB%82%A0%EC%9D%80%EA%B0%84%EB%8B%A4_%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg">
+                    <div class="card-body">
+                        <h5 class="card-title">영화 제목</h5>
+                        <p class="card-text">영화 내용</p>
+                        <p class="card-text">⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img
+                        src="https://i.namu.wiki/i/hfU2LI6sbRV6tLAy6PXzePx19eDfD-cDxgn7P8GN4SJof7PYxYAZWt-lBp6-pjzZQlgbpuV8GvvGKikYtdAMvg.webp">
+                    <div class="card-body">
+                        <h5 class="card-title">영화 제목</h5>
+                        <p class="card-text">영화 내용</p>
+                        <p class="card-text">⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img
+                        src="https://i.namu.wiki/i/BIl3oY17WExT8MRfFK8BAd_OrbuAe6dbY4ouievj5wKjZN5vZqeYF0oGRo37UEnqmRAr4cOxer2xVR7VoMAvgw.webp">
+                    <div class="card-body">
+                        <h5 class="card-title">영화 제목</h5>
+                        <p class="card-text">영화 내용</p>
+                        <p class="card-text">⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
